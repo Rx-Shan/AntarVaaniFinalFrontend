@@ -12,7 +12,7 @@ function ChatPage() {
     setAnswers(savedAnswers);
 
     // Initial message request to backend (optional if already loaded from /submit page)
-    fetch('${import.meta.env.VITE_API_BASE_URL}/submit', {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ answers: Object.values(savedAnswers) }),
@@ -39,7 +39,7 @@ function ChatPage() {
 
     const updatedHistory = [...chatHistory, ['User', input]];
 
-    fetch('${import.meta.env.VITE_API_BASE_URL}/chat', {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
