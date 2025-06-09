@@ -6,16 +6,19 @@ function ChatPage() {
   const [answers, setAnswers] = useState({});
   const [chatHistory, setChatHistory] = useState([]);
   const [initialMessage, setInitialMessage] = useState('');
+  const [userName, setUserName] = useState('');
 
   useEffect(() => {
     const savedAnswers = JSON.parse(localStorage.getItem('mentalHealthAnswers')) || {};
     setAnswers(savedAnswers);
+    const name = localStorage.getItem('userName') || '';
+    setUserName(name);
 
     // Initial message request to backend (optional if already loaded from /submit page)
     fetch(`${import.meta.env.VITE_API_BASE_URL}/submit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ answers: Object.values(savedAnswers) }),
+      body: JSON.stringify({ answers: Object.values(savedAnswers), name }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -46,6 +49,7 @@ function ChatPage() {
         user_input: input,
         history: chatHistory,
         initial_msg: initialMessage,
+        name: userName,
       }),
     })
       .then((res) => res.json())

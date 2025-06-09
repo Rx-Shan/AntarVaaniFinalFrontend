@@ -58,6 +58,7 @@ const SAMPLE_QUESTIONS = {
 function QuestionnairePage() {
   const navigate = useNavigate();
   const [answers, setAnswers] = useState({});
+  const [userName, setUserName] = useState('');
 
   const handleChange = (question, value) => {
     setAnswers((prev) => ({
@@ -69,6 +70,7 @@ function QuestionnairePage() {
   const handleSubmit = () => {
   console.log("Submitted answers:", answers);
   localStorage.setItem('mentalHealthAnswers', JSON.stringify(answers));
+  localStorage.setItem('userName', userName);
   navigate('/chat');
 };
 
@@ -78,6 +80,16 @@ function QuestionnairePage() {
       <div className="bg-white shadow-xl rounded-lg w-full max-w-4xl p-6 space-y-6">
         <h2 className="font-serif text-2xl font-bold text-center text-sky-900 mb-4">Mental Health Questionnaire</h2>
 
+        <div className="mb-6">
+          <input
+            type="text"
+            className="w-full px-4 py-2 border border-blue-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
+            placeholder="Tell us your name..."
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+        
         {Object.entries(SAMPLE_QUESTIONS).map(([question, options], index) => (
           <div key={index} className="bg-sky-300 bg-opacity-30 rounded-lg p-4 border-b-2 border-blue-200">
             <p className="font-semibold mb-2 text-black py-4">{index + 1}. {question}</p>
